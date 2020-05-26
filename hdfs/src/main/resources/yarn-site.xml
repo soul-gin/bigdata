@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<configuration>
+
+<!-- Site specific YARN configuration properties -->
+<property>
+ <name>yarn.nodemanager.aux-services</name>
+ <value>mapreduce_shuffle</value>
+</property>
+
+<property>
+ <name>yarn.resourcemanager.ha.enabled</name>
+ <value>true</value>
+</property>
+<property>
+ <name>yarn.resourcemanager.zk-address</name>
+ <value>node02:2181,node03:2181,node04:2181</value>
+</property>
+
+<property>
+ <name>yarn.resourcemanager.cluster-id</name>
+ <value>yarnCluster</value>
+</property>
+
+<property>
+ <name>yarn.resourcemanager.ha.rm-ids</name>
+ <value>rm1,rm2</value>
+</property>
+<property>
+ <name>yarn.resourcemanager.hostname.rm1</name>
+ <value>node03</value>
+</property>
+<property>
+ <name>yarn.resourcemanager.hostname.rm2</name>
+ <value>node04</value>
+</property>
+</configuration>
