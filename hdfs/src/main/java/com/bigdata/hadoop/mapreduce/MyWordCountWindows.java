@@ -2,7 +2,6 @@ package com.bigdata.hadoop.mapreduce;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -10,18 +9,29 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 
-public class MyWordCount {
+public class MyWordCountWindows {
 
-    // 打成jar包后,上传jar到集群中一台服务器,指定main方法所在class
-    // 运行命令 hadoop jar hdfs-1.0-SNAPSHOT.jar com.bigdata.hadoop.mapreduce.MyWordCount
+    //window版本,直接运行main方法,不手动上传jar包到linux服务器
+    //需特殊处理2步: 知会框架; 指定客户端jar上传路径
     public static void main(String[] args) {
         try {
             //配置文件true从打包后的resources中获取
             Configuration conf = new Configuration(true);
+
+            //windows 特殊处理1
+            // 如果是在windows(异构平台)上运行
+            // 需要让框架知道,使用 .cmd 文件执行而不是 .sh
+            conf.set("mapreduce.app-submission.cross-platform", "true");
+
             //自定义job
             Job job = Job.getInstance(conf);
+
+            //windows 特殊处理2
+            //需要告诉客户端上传哪个jar包给集群去执行
+            job.setJar("D:\\java\\code\\naruto\\bigdata\\hdfs\\target\\hdfs-1.0-SNAPSHOT.jar");
+
             //必须指定入口方法
-            job.setJarByClass(MyWordCount.class);
+            job.setJarByClass(MyWordCountWindows.class);
             //指定方法名
             job.setJobName("udfWordCount");
             //指定输入,输出路径
