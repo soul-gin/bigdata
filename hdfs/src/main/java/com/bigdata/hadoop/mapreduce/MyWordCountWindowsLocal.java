@@ -32,7 +32,7 @@ public class MyWordCountWindowsLocal {
             //hadoop解析args参数的util
             //工具类会帮我们把 -D 等等的属性直接set到conf中,会留下 commandOptions
             // 通过 edit configurations 中的 Program arguments 来设置(指定reduces的个数,输入和输出目录)
-            // -D mapreduce.job.reduces=2 /data/input/ /data/output/
+            // -D mapreduce.job.reduces=2 /data/input/wc /data/output/wc
             GenericOptionsParser parser = new GenericOptionsParser(conf, args);
             String[] otherArgs = parser.getRemainingArgs();
 
@@ -57,11 +57,11 @@ public class MyWordCountWindowsLocal {
             //指定方法名
             job.setJobName("udfWordCount");
             //指定输入,输出路径
-            //目前取的是 Program arguments 中非 -D后面的第一个参数
+            //目前取的是 Program arguments 中非 -D 的第一个参数
             System.out.println("args_no_D_0=" + otherArgs[0]);
             Path in = new Path(otherArgs[0]);
             TextInputFormat.addInputPath(job, in);
-            //目前取的是 Program arguments 中非 -D后面的第二个参数
+            //目前取的是 Program arguments 中非 -D 的第二个参数
             System.out.println("args_no_D_1=" + otherArgs[1]);
             Path out = new Path(otherArgs[1]);
             if (out.getFileSystem(conf).exists(out)){
